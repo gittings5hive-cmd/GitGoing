@@ -1,4 +1,5 @@
 const STORAGE_KEY = 'gitgoing-tasks';
+const BG_KEY = 'gitgoing-background';
 
 let tasks = [];
 let activeFilter = 'all';
@@ -323,9 +324,67 @@ function hideDragOverlay() {
 
 // ── DOMContentLoaded ────────────────────────────────────────────────────────
 
+// ── Background image ────────────────────────────────────────────────────────
+
+function loadBackground() {
+    const stored = localStorage.getItem(BG_KEY);
+    if (stored) {applyBackground(stored);}
+}
+
+function applyBackground(dataUrl) {
+    document.getElementById('bg-layer').style.backgroundImage = `url(${dataUrl})`;
+    document.body.classList.add('custom-bg');
+    document.getElementById('bg-remove-btn').classList.remove('hidden');
+}
+
+function removeBackground() {
+    localStorage.removeItem(BG_KEY);
+    document.getElementById('bg-layer').style.backgroundImage = '';
+    document.body.classList.remove('custom-bg');
+    document.getElementById('bg-remove-btn').classList.add('hidden');
+}
+
+function resizeBackground(file) {
+    if (!file.type.startsWith('image/')) {
+        alert('Only image files are supported.');
+        return;
+    }
+    const reader = new FileReader();
+    reader.onload = e => {
+        const img = new Image();
+        img.onload = () => {
+            const MAX = 1920;
+            const scale = Math.min(1, MAX / Math.max(img.width, img.height));
+            const w = Math.round(img.width * scale);
+            const h = Math.round(img.height * scale);
+            const canvas = document.createElement('canvas');
+            canvas.width = w;
+            canvas.height = h;
+            canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+            const dataUrl = canvas.toDataURL('image/jpeg', 0.88);
+            localStorage.setItem(BG_KEY, dataUrl);
+            applyBackground(dataUrl);
+        };
+        img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     loadTasks();
     render();
+    loadBackground();
+
+    // Background upload
+    document.getElementById('bg-upload-btn').addEventListener('click', () => {
+        document.getElementById('bg-file-input').click();
+    });
+    document.getElementById('bg-remove-btn').addEventListener('click', removeBackground);
+    document.getElementById('bg-file-input').addEventListener('change', e => {
+        const file = e.target.files[0];
+        if (file) {resizeBackground(file);}
+        e.target.value = '';
+    });
 
     document.getElementById('add-task-btn').addEventListener('click', addTask);
     document.getElementById('task-input').addEventListener('keydown', e => { if (e.key === 'Enter') {addTask();} });

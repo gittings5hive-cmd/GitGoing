@@ -9,10 +9,17 @@
 </head>
 
 <body>
+    <!-- Full-page background layer (sits behind everything) -->
+    <div id="bg-layer" aria-hidden="true"></div>
+
     <div class="app">
         <header>
             <h1>GitGoing</h1>
             <p class="subtitle">Task Manager</p>
+            <div class="bg-controls">
+                <button type="button" id="bg-upload-btn" title="Change background image" aria-label="Change background image">&#127758; Background</button>
+                <button type="button" id="bg-remove-btn" class="hidden" title="Remove background image" aria-label="Remove background image">&times;</button>
+            </div>
         </header>
 
         <div class="stats-bar">
@@ -101,6 +108,9 @@
             </div>
         </div>
     </div>
+
+    <!-- Hidden file input for background image -->
+    <input type="file" id="bg-file-input" accept="image/*" aria-hidden="true" />
 
     <!-- Shared hidden file input for image attachment -->
     <input type="file" id="file-input" accept="image/*" aria-hidden="true" />

@@ -12,10 +12,33 @@ body {
     margin: 0 auto;
 }
 
+/* Background layer */
+#bg-layer {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: background-image 0.4s ease;
+}
+
+body.custom-bg {
+    background: transparent;
+}
+
+body.custom-bg #bg-layer::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(30, 10, 50, 0.45);
+}
+
 header {
     text-align: center;
     margin-bottom: 24px;
     color: #fff;
+    position: relative;
 }
 
 header h1 {
@@ -29,6 +52,58 @@ header h1 {
     opacity: 0.8;
     margin-top: 2px;
 }
+
+/* Background controls */
+.bg-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 12px;
+}
+
+#bg-upload-btn {
+    background: rgba(255,255,255,0.15);
+    border: 2px solid rgba(255,255,255,0.4);
+    color: #fff;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+    letter-spacing: 0.2px;
+}
+
+#bg-upload-btn:hover {
+    background: rgba(255,255,255,0.28);
+    border-color: rgba(255,255,255,0.7);
+}
+
+#bg-remove-btn {
+    background: rgba(255,255,255,0.12);
+    border: 2px solid rgba(255,255,255,0.3);
+    color: rgba(255,255,255,0.8);
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    font-size: 1rem;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, color 0.2s;
+    padding: 0;
+}
+
+#bg-remove-btn:hover {
+    background: rgba(220, 50, 50, 0.4);
+    border-color: rgba(255,150,150,0.6);
+    color: #fff;
+}
+
+#bg-file-input { display: none; }
 
 /* Tab bar */
 .tab-bar {
