@@ -1,16 +1,124 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <link rel="stylesheet" type="text/css" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitGoing Task Manager</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <div class="todo-container">
-        <h1>Gitt Going</h1>
-        <input type="text" id="todo-input" placeholder="Add a task">
-        <button id="add-todo">Add</button>
-        <ul id="todo-list"></ul>
+    <div class="app">
+        <header>
+            <h1>GitGoing</h1>
+            <p class="subtitle">Task Manager</p>
+        </header>
+
+        <div class="stats-bar">
+            <div class="stat">
+                <span class="stat-number" id="stat-total">0</span>
+                <span class="stat-label">Total</span>
+            </div>
+            <div class="stat">
+                <span class="stat-number" id="stat-active">0</span>
+                <span class="stat-label">Active</span>
+            </div>
+            <div class="stat">
+                <span class="stat-number" id="stat-done">0</span>
+                <span class="stat-label">Done</span>
+            </div>
+        </div>
+
+        <div class="tab-bar" role="tablist">
+            <button type="button" class="tab-btn active" role="tab" aria-selected="true"  aria-controls="tab-tasks"   id="tabkey-tasks">Tasks</button>
+            <button type="button" class="tab-btn"        role="tab" aria-selected="false" aria-controls="tab-summary" id="tabkey-summary">Summary</button>
+        </div>
+
+        <!-- Tasks tab -->
+        <div id="tab-tasks" class="tab-panel" role="tabpanel" aria-labelledby="tabkey-tasks">
+            <div class="add-task-panel">
+                <h2>Add Task</h2>
+                <div class="form-row">
+                    <input type="text" id="task-input" placeholder="What needs to be done?" />
+                </div>
+                <div class="form-row form-row--split">
+                    <select id="task-priority" title="Priority" aria-label="Priority">
+                        <option value="low">Low Priority</option>
+                        <option value="medium" selected>Medium Priority</option>
+                        <option value="high">High Priority</option>
+                    </select>
+                    <input type="date" id="task-due" title="Due date" aria-label="Due date" />
+                </div>
+                <div class="form-row">
+                    <input type="text" id="task-tag" placeholder="Tag (optional, e.g. work, personal)" />
+                </div>
+                <button type="button" id="add-task-btn">+ Add Task</button>
+            </div>
+
+            <div class="filter-bar">
+                <input type="text" id="search-input" placeholder="Search tasks..." />
+                <div class="filter-buttons">
+                    <button type="button" class="filter-btn active" data-filter="all">All</button>
+                    <button type="button" class="filter-btn" data-filter="active">Active</button>
+                    <button type="button" class="filter-btn" data-filter="done">Done</button>
+                </div>
+                <select id="priority-filter" title="Filter by priority" aria-label="Filter by priority">
+                    <option value="all">All Priorities</option>
+                    <option value="high">High</option>
+                    <option value="medium">Medium</option>
+                    <option value="low">Low</option>
+                </select>
+            </div>
+
+            <ul id="task-list"></ul>
+
+            <div id="empty-state" class="empty-state hidden">
+                <p>No tasks yet. Add one above!</p>
+            </div>
+
+            <div class="footer-actions">
+                <button type="button" id="clear-done-btn">Clear Completed</button>
+            </div>
+        </div>
+
+        <!-- Summary tab -->
+        <div id="tab-summary" class="tab-panel hidden" role="tabpanel" aria-labelledby="tabkey-summary">
+            <div class="summary-panel">
+                <table id="summary-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Task</th>
+                            <th>Priority</th>
+                            <th>Due Date</th>
+                            <th>Tag</th>
+                        </tr>
+                    </thead>
+                    <tbody id="summary-tbody"></tbody>
+                </table>
+                <p id="summary-empty" class="summary-empty-msg hidden">No open tasks!</p>
+            </div>
+        </div>
     </div>
+
+    <!-- Shared hidden file input for image attachment -->
+    <input type="file" id="file-input" accept="image/*" aria-hidden="true" />
+
+    <!-- Global drag-into-window overlay -->
+    <div id="drag-overlay" class="drag-overlay hidden" aria-hidden="true">
+        <div class="drag-overlay-inner">
+            <span class="drag-overlay-icon">🖼️</span>
+            <p>Drop image onto a task to attach it</p>
+        </div>
+    </div>
+
+    <!-- Lightbox -->
+    <div id="lightbox" class="lightbox hidden" role="dialog" aria-modal="true" aria-label="Image preview" tabindex="-1">
+        <button type="button" id="lightbox-close" aria-label="Close image preview">&times;</button>
+        <img id="lightbox-img" src="" alt="Attached image preview" />
+    </div>
+
     <script src="script.js"></script>
 </body>
+</html>
