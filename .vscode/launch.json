@@ -1,0 +1,55 @@
+{
+    "configurations": [
+        {
+            "type": "chrome",
+            "name": "Launch Google Chrome",
+            "request": "launch",
+            "runtimeArgs": [
+                "--remote-debugging-port=9222"
+            ],
+            "url": "http://127.0.0.1:3456", // Provide your project's url to finish configuring
+            "presentation": {
+                "hidden": true
+            }
+        },
+        {
+            "type": "chrome",
+            "name": "Launch Google Chrome in headless mode",
+            "request": "launch",
+            "runtimeArgs": [
+                "--headless",
+                "--remote-debugging-port=9222"
+            ],
+            "url": "http://127.0.0.1:3456", // Provide your project's url to finish configuring
+            "presentation": {
+                "hidden": true
+            }
+        },
+        {
+            "type": "chrome",
+            "name": "Attach Chrome DevTools",
+            "request": "attach",
+            "port": 9222,
+            "url": "http://127.0.0.1:3456", // Provide your project's url to finish configuring
+            "presentation": {
+                "hidden": true
+            }
+        }
+    ],
+    "compounds": [
+        {
+            "name": "Launch Chrome Headless and attach DevTools",
+            "configurations": [
+                "Launch Google Chrome in headless mode",
+                "Attach Chrome DevTools"
+            ]
+        },
+        {
+            "name": "Launch Chrome and attach DevTools",
+            "configurations": [
+                "Launch Google Chrome",
+                "Attach Chrome DevTools"
+            ]
+        }
+    ]
+}
