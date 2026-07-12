@@ -96,6 +96,7 @@ git branch -d <your-branch-name>
 - [Introduction to Git and GitHub ↗](https://github.com/skills/introduction-to-github)
 - [GitHub Skills Courses ↗](https://skills.github.com/)
 - [GitHub Foundations Certificate ↗](https://learn.microsoft.com/en-us/collections/o1njfe825p602p)
+- [Anthropic Academy Guide (free AI courses) ↗](resources/anthropic-academy-guide.md)
 
 
 ## Contributing
